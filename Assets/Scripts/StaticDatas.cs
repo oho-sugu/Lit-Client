@@ -7,7 +7,7 @@ using Orthoverse;
 public class StaticDatas
 {
     public static string Location;
-    public static string Channel;
+    public static string[] Channels;
 
     public static bool editMode = false;
     public static GameObject selectedGO;

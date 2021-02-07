@@ -25,42 +25,6 @@ public class APIController : MonoBehaviour
     private const string siteurl = "lit-server-test.an.r.appspot.com";
 
     // All Transform parameter are world space
-    public void newObject(Vector3 position, Quaternion rotation, Vector3 scale, string url){
-        StartCoroutine(_newObject(position, rotation, scale, url) );
-    }
-    IEnumerator _newObject(Vector3 position, Quaternion rotation, Vector3 scale, string url){
-        string posturl = "http://"+siteurl+"/new";
-        ObjectData data = new ObjectData();
-        data.channel = StaticDatas.Channel;
-        data.location = StaticDatas.Location;
-        data.url = url;
-        data.key = Guid.NewGuid().ToString();
-        data.position = position;
-        data.scale = scale;
-        data.rotation = rotation;
-
-        string json = JsonUtility.ToJson(data);
-        Debug.Log(json);
-        byte[] postdata = Encoding.UTF8.GetBytes(json);
-        
-        var request = new UnityWebRequest(posturl, UnityWebRequest.kHttpVerbPOST){
-            uploadHandler = new UploadHandlerRaw(postdata),
-            downloadHandler = new DownloadHandlerBuffer()
-        };
-
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
-        if(request.isNetworkError || request.isHttpError){
-            Debug.Log(request.error);
-        } else {
-            Debug.Log(request.downloadHandler.text);
-            if(request.downloadHandler.text.Equals("Success")){
-                ObjectInstanciate(data);
-            }
-        }
-    }
-
     public void updateObject(ObjectData original, GameObject root){
         StartCoroutine(_updateObject(original, root) );
     }

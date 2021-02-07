@@ -23,7 +23,8 @@ public class CustomDocumentBehavior : MonoBehaviour
         con.gameObject.transform.localPosition = od.position;
         con.gameObject.transform.localScale = od.scale;
         con.gameObject.transform.localRotation = od.rotation;
-        con.gameObject.transform.SetParent(StaticDatas.objectRoot.transform, false);
+        var parentTransform = StaticDatas.objectRoot.transform.Find(od.channel);
+        con.gameObject.transform.SetParent(parentTransform, false);
         con.gameObject.transform.hasChanged = false;
     }
 
